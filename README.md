@@ -34,4 +34,4 @@ Huu ndio mtambo mkuu wa mafunzo ya kitalamu kwa ajili ya mashindano ya **IAA Cyb
 ## ⚠️ Legal Notice
 Platform hii ni kwa ajili ya mafunzo ya **Ethical Hacking** pekee. Matumizi yoyote nje ya IAA Cyber-Unit yanapaswa kufuata taratibu za kisheria za Tanzania.
 
-**Contact:** [Franklline Online Applications Stationery - Arusha]
+**Contact:** frankkarani146@gmail.com

@@ -36,7 +36,8 @@ This is the primary technical training engine for the IAA Cyber-Champions 2025/2
 
 ---
 
- ##⚠️ Legal Notice
+ **⚠️ Legal Notice**
+ 
 **This platform is strictly dedicated to Ethical Hacking practice and educational purposes.** 
 **All activities must be conducted within authorized environments.** 
 **Unauthorized access to systems or networks is strictly prohibited and remains a violation of professional and legal standards. 🎓💻⚖️**

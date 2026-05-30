@@ -47,22 +47,21 @@ if HAS_LIMITER:
     
     # Initialize limiter
     limiter = Limiter(
-        key_func=get_real_ip,  # Use real IP, not proxy IP
+        key_func=get_real_ip,
         app=app,
         default_limits=["500 per day", "100 per hour"],
-        storage_uri="memory://",  # Use memory storage (works on Render)
-        strategy="fixed-window"  # Fixed window strategy
+        storage_uri="memory://",
+        strategy="fixed-window"
     )
     
-    # 🛑 RATE LIMITS FOR LOGIN ENDPOINT
-    # Allow only 5 login attempts per minute per IP
+    # Apply rate limit to login endpoint
     @app.before_request
     def apply_rate_limits():
         if request.endpoint == 'auth.login' and request.method == 'POST':
-            # Create a dynamic limit
-            limit = limiter.shared_limit("5 per minute", scope="login")
-            # Apply the limit
-            limit(lambda: None)()
+            try:
+                limiter.shared_limit("5 per minute", scope="login")(lambda: None)()
+            except Exception:
+                pass
     
     # Custom error handler for rate limit exceeded
     @app.errorhandler(429)
@@ -105,9 +104,6 @@ def secure_admin_setup():
             if missing_vars:
                 logger.error(f"[-] Missing required environment variables: {', '.join(missing_vars)}")
                 logger.error("[-] Admin setup aborted for security reasons.")
-                logger.info("[!] Please set these variables in your Render.com dashboard:")
-                for var in missing_vars:
-                    logger.info(f"    - {var}")
                 return False
             
             # Validate password strength
@@ -127,7 +123,6 @@ def secure_admin_setup():
                 existing_admin.password = hash_password(password)
                 db.session.commit()
                 logger.info(f"[✓] Admin account UPDATED securely: {username} ({email})")
-                logger.info("[!] IMPORTANT: Use the new password you just set in environment variables.")
                 return True
             else:
                 # Create new admin
@@ -142,7 +137,6 @@ def secure_admin_setup():
                 db.session.add(new_admin)
                 db.session.commit()
                 logger.info(f"[✓] New admin account CREATED securely: {username} ({email})")
-                logger.info("[!] Save this password securely! It cannot be recovered if lost.")
                 return True
                 
         except SQLAlchemyError as e:
@@ -152,15 +146,6 @@ def secure_admin_setup():
         except Exception as e:
             logger.error(f"[-] Unexpected error during admin setup: {str(e)}")
             return False
-
-# =========================================================================
-# 🔍 ADMIN UTILITY FUNCTIONS
-# =========================================================================
-def check_admin_exists():
-    """Check if any admin account exists in the system"""
-    with app.app_context():
-        admin_count = Users.query.filter_by(type="admin").count()
-        return admin_count > 0
 
 def list_admins():
     """List all admin users (for debugging)"""
@@ -172,57 +157,22 @@ def list_admins():
                 logger.info(f"    - {admin.name} ({admin.email})")
         return admins
 
-def promote_to_admin(user_id=None, email=None, username=None):
-    """
-    Promote existing user to admin.
-    Use this for adding additional admins.
-    """
-    with app.app_context():
-        query = Users.query
-        if user_id:
-            user = query.filter_by(id=user_id).first()
-        elif email:
-            user = query.filter_by(email=email).first()
-        elif username:
-            user = query.filter_by(name=username).first()
-        else:
-            logger.error("[-] Please provide user_id, email, or username")
-            return False
-        
-        if user:
-            user.type = "admin"
-            db.session.commit()
-            logger.info(f"[✓] User {user.name} promoted to admin")
-            return True
-        else:
-            logger.error(f"[-] User not found")
-            return False
-
 # =========================================================================
-# 🚀 MAIN EXECUTION
+# 🚀 RUN AUTOMATIC ADMIN SETUP ON SERVER STARTUP (Lazima Gunicorn Iifanye!)
 # =========================================================================
-if __name__ == "__main__":
+try:
     logger.info("=" * 50)
-    logger.info("CTFd Admin Setup Script - Secure Configuration")
+    logger.info("[*] Initializing Automatic Secure Admin Setup...")
     logger.info("=" * 50)
     
-    # Run admin setup
+    # Hii inakimbia mara moja server inapowaka - NO __main__ block!
     success = secure_admin_setup()
     
     if success:
-        logger.info("=" * 50)
-        logger.info("[✓] Admin setup completed successfully!")
-        logger.info("[✓] Your CTF platform is ready!")
-        logger.info("=" * 50)
-        
-        # Optional: List all admins
+        logger.info("[✓] Admin setup completed successfully at startup runtime!")
         list_admins()
     else:
-        logger.info("=" * 50)
-        logger.error("[✗] Admin setup FAILED!")
-        logger.info("=" * 50)
-        logger.info("Troubleshooting tips:")
-        logger.info("1. Check that database migrations are complete")
-        logger.info("2. Verify environment variables are set in Render.com")
-        logger.info("3. Check Render.com logs for more details")
-        sys.exit(1)
+        logger.error("[✗] Startup admin setup failed! Check environment variables.")
+    logger.info("=" * 50)
+except Exception as startup_error:
+    logger.error(f"[-] Unexpected error during startup initialization: {str(startup_error)}")

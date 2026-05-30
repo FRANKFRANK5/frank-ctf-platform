@@ -1,90 +1,77 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208 !important; border-bottom: 2px solid #00ff41 !important; box-shadow: 0 0 15px #00ff41 !important; display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 30px !important; position: fixed !important; top: 0 !important; width: 100% !important; z-index: 1030 !important;">
-    <div class="container" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; max-width: 1200px; margin: 0 auto;">
-        
-        <!-- Brand/Logo with Neon Effect -->
-        <a class="navbar-brand" href="/" style="color: #00ff41 !important; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold !important; letter-spacing: 2px; font-family: 'Courier New', monospace; text-decoration: none !important; font-size: 1.4rem !important;">
-            ⚡ IAA CYBER CHAMPIONS {% if User.type == 'admin' %}<span style="color: #ff003c; font-size: 0.8rem;">[ADMIN_CONSOLE]</span>{% endif %}
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41; box-shadow: 0 0 15px #00ff41;">
+    <div class="container">
+        <!-- Brand/Logo -->
+        <a class="navbar-brand" href="/" style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold; letter-spacing: 2px;">
+            ⚡ IAA CYBER CHAMPIONS
         </a>
         
-        <!-- Navbar Links -->
-        <div id="navbarContent">
-            <ul style="list-style: none !important; display: flex !important; gap: 25px !important; margin: 0 !important; padding: 0 !important; flex-direction: row !important; align-items: center !important;">
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        🏠 HOME
-                    </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" style="border-color: #00ff41;">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <!-- HOME - everyone can see -->
+                <li class="nav-item">
+                    <a class="nav-link" href="/">🏠 HOME</a>
                 </li>
                 
-                <!-- 🔐 1. KWA AJILI YA WATUMIAJI AMBAO HAJAINGIA MTANDAONI (ANONYMOUS) -->
-                {% if not Authed %}
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/register" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        📝 REGISTER
-                    </a>
-                </li>
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/login" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        🔐 LOGIN
-                    </a>
-                </li>
-                {% endif %}
-                
-                <!-- ⚔️ 2. KWA AJILI YA WALIOINGIA MTANDAONI TU (AUTHENTICATED USERS) -->
-                {% if Authed %}
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/challenges" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        ⚔️ CHALLENGES
-                    </a>
-                </li>
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/scoreboard" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        📊 SCOREBOARD
-                    </a>
-                </li>
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/users" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
-                        👥 USERS
-                    </a>
-                </li>
-                
-                <!-- 👑 KITUFE CHA ADMIN PANEL -->
-                {% if User.type == 'admin' %}
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/admin" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important; text-shadow: 0 0 5px #ff003c;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 10px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='0 0 5px #ff003c'">
-                        ⚙️ ADMIN Panel
-                    </a>
-                </li>
-                {% endif %}
-                
-                <!-- 🚪 KITUFE CHA LOGOUT -->
-                <li style="list-style: none !important; display: inline-block !important;">
-                    <a href="/logout" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 5px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='none'">
-                        🚪 LOGOUT
-                    </a>
-                </li>
+                <!-- Check if user is logged in - IMPORTANT FIX! -->
+                {% if session.get('user_id') %}
+                    <!-- LOGGED IN USER - Show these -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/challenges">⚔️ CHALLENGES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/scoreboard">📊 SCOREBOARD</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teams">👥 TEAMS</a>
+                    </li>
+                    
+                    <!-- Admin Panel - Only for admin users -->
+                    {% if session.get('admin') or session.get('type') == 'admin' %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c;">👑 ADMIN</a>
+                    </li>
+                    {% endif %}
+                    
+                    <!-- Profile Dropdown -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                            👤 {{ session.get('user_name', 'Account') }}
+                        </a>
+                        <div class="dropdown-menu" style="background: #0d0208; border: 1px solid #00ff41;">
+                            <a class="dropdown-item" href="/profile">📋 Profile</a>
+                            <a class="dropdown-item" href="/settings">⚙️ Settings</a>
+                            <div class="dropdown-divider" style="border-color: #00ff41;"></div>
+                            <a class="dropdown-item" href="/logout" style="color: #ff003c;">🚪 Logout</a>
+                        </div>
+                    </li>
+                {% else %}
+                    <!-- NOT LOGGED IN - Show Register and Login -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">📝 REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">🔐 LOGIN</a>
+                    </li>
                 {% endif %}
             </ul>
         </div>
     </div>
 </nav>
 
-<!-- Spacing and Layout Override -->
 <style>
-    body {
-        padding-top: 90px !important;
-        background-color: #0d0208 !important;
-    }
-    .navbar-brand {
-        animation: neonPulse 2s infinite;
-    }
+    body { padding-top: 80px; }
+    .navbar-brand { animation: neonPulse 2s infinite; }
     @keyframes neonPulse {
         0%, 100% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
         50% { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
     }
-    ul, li {
-        list-style: none !important;
-        list-style-type: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
+    .nav-link { transition: all 0.3s ease; }
+    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); text-shadow: 0 0 5px #00ff41; }
+    .dropdown-menu { box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); }
+    .dropdown-item { transition: all 0.3s ease; }
+    .dropdown-item:hover { transform: translateX(5px); background: rgba(0, 255, 65, 0.1); }
 </style>

@@ -1,62 +1,46 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208 !important; border-bottom: 2px solid #00ff41 !important; box-shadow: 0 0 15px #00ff41 !important;">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41;">
     <div class="container">
-        <!-- Brand/Logo -->
-        <a class="navbar-brand" href="/" style="color: #00ff41 !important; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold !important; letter-spacing: 2px; font-family: 'Courier New', monospace; text-decoration: none !important;">
-            ⚡ IAA CYBER CHAMPIONS {% if is_admin() %}<span style="color: #ff003c; font-size: 0.8rem;">[ADMIN_CONSOLE]</span>{% endif %}
+        <a class="navbar-brand" href="/" style="color: #00ff41; text-shadow: 0 0 10px #00ff41; font-weight: bold;">
+            ⚡ IAA CYBER CHAMPIONS
         </a>
         
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" style="border-color: #00ff41 !important;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
             <span class="navbar-toggler-icon"></span>
         </button>
         
         <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ms-auto" style="align-items: center !important; flex-direction: row !important; gap: 15px !important;">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/" style="color: #ffffff !important; font-family: 'Courier New', monospace; font-weight: bold;">🏠 HOME</a>
+                    <a class="nav-link" href="/">🏠 HOME</a>
                 </li>
                 
-                <!-- 🔐 TABAKA LA WAGENI (WANACHAMA AMBAO HAJAINGIA - ANONYMOUS) -->
-                {% if not authed() %}
-                    {% if registration_visible() %}
+                <!-- CHECK LOGIN USING SESSION - NO get_current_user() -->
+                {% if session.get('user_id') %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/register" style="color: #00ff41 !important; font-family: 'Courier New', monospace; font-weight: bold;">📝 REGISTER</a>
-                    </li>
-                    {% endif %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login" style="color: #00ff41 !important; font-family: 'Courier New', monospace; font-weight: bold;">🔐 LOGIN</a>
-                    </li>
-                {% endif %}
-                
-                <!-- ⚔️ TABAKA LA WANACHAMA WALIOINGIA NDANI (AUTHENTICATED) -->
-                {% if authed() %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/challenges" style="color: #ffffff !important; font-family: 'Courier New', monospace; font-weight: bold;">⚔️ CHALLENGES</a>
+                        <a class="nav-link" href="/challenges">⚔️ CHALLENGES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/scoreboard" style="color: #ffffff !important; font-family: 'Courier New', monospace; font-weight: bold;">📊 SCOREBOARD</a>
+                        <a class="nav-link" href="/scoreboard">📊 SCOREBOARD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/teams" style="color: #ffffff !important; font-family: 'Courier New', monospace; font-weight: bold;">👥 TEAMS</a>
+                        <a class="nav-link" href="/teams">👥 TEAMS</a>
                     </li>
                     
-                    <!-- 👑 KITUFE CHA ADMIN - KINAONEKANA KWAKO TU UKIWA ADMIN -->
-                    {% if is_admin() %}
+                    {% if session.get('type') == 'admin' %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin" style="color: #ff003c !important; text-shadow: 0 0 5px #ff003c; font-weight: bold !important; font-family: 'Courier New', monospace;">👑 ADMIN</a>
+                        <a class="nav-link" href="/admin" style="color: #ff003c;">👑 ADMIN</a>
                     </li>
                     {% endif %}
                     
-                    <!-- USER DROPDOWN (Kutumia get_current_user asili ya CTFd) -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="color: #00ff41 !important; font-weight: bold !important; font-family: 'Courier New', monospace;">
-                            👤 {{ get_current_user().name | default("Account") }}
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" style="background: #0d0208 !important; border: 1px solid #00ff41 !important; box-shadow: 0 0 20px rgba(0, 255, 65, 0.3) !important;">
-                            <a class="dropdown-item" href="/profile" style="color: #fff !important; text-decoration: none !important;">📋 Profile</a>
-                            <a class="dropdown-item" href="/settings" style="color: #fff !important; text-decoration: none !important;">⚙️ Settings</a>
-                            <div class="dropdown-divider" style="border-color: #00ff41 !important;"></div>
-                            <a class="dropdown-item" href="/logout" style="color: #ff003c !important; text-decoration: none !important;">🚪 Logout</a>
-                        </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">🚪 LOGOUT</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register">📝 REGISTER</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">🔐 LOGIN</a>
                     </li>
                 {% endif %}
             </ul>
@@ -65,17 +49,7 @@
 </nav>
 
 <style>
-    body { padding-top: 90px !important; background-color: #0d0208 !important; }
-    .navbar-brand { animation: neonPulse 2s infinite; }
-    @keyframes neonPulse {
-        0%, 100% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
-        50% { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
-    }
-    .nav-link { transition: all 0.3s ease; margin: 0 5px; font-weight: bold; text-decoration: none !important; }
-    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); text-shadow: 0 0 5px #00ff41; }
-    .dropdown-menu { background: #0d0208 !important; border: 1px solid #00ff41 !important; }
-    .dropdown-item { transition: all 0.3s ease; color: #ffffff !important; background: transparent !important; }
-    .dropdown-item:hover { transform: translateX(5px); background: rgba(0, 255, 65, 0.1) !important; color: #00ff41 !important; }
-    .dropdown-divider { border-color: #00ff41 !important; }
-    ul, li { list-style: none !important; list-style-type: none !important; margin: 0 !important; padding: 0 !important; }
+    body { padding-top: 80px; }
+    .nav-link { transition: all 0.3s ease; margin: 0 5px; color: #fff !important; }
+    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); }
 </style>

@@ -1,52 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="jumbotron homepage-jumbotron" style="background: rgba(13, 2, 8, 0.95); border: 2px solid #00ff41; border-radius: 15px; padding: 60px 30px; margin-top: 40px; box-shadow: 0 0 30px rgba(0, 255, 65, 0.2); text-align: center;">
-    <div class="container">
-        <!-- Neon Header -->
-        <h1 style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 3px; font-size: 3rem; margin-bottom: 20px;">
-            IAA CYBER CHAMPIONS
-        </h1>
-        <h3 style="color: #fff; text-shadow: 0 0 5px #00ff41; font-family: 'Courier New', monospace; margin-bottom: 30px; letter-spacing: 1px;">
-            GLOBAL HUB & FINTECH SECURITY ARENA
-        </h3>
-        
-        <!-- Pitch Paragraph -->
-        <p style="color: #00ff41; font-family: 'Courier New', monospace; font-size: 1.2rem; max-width: 800px; margin: 0 auto 40px auto; line-height: 1.8; border-left: 3px solid #00ff41; padding-left: 20px; text-align: left;">
-            Welcome to Africa's premier gamified cybersecurity training platform. Engineered specifically for the Fintech ecosystem, we simulate real-world financial vectors, API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
-        </p>
-
-        <!-- CTA Buttons like HackTheBox -->
-        <div class="action-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success btn-lg" style="border: 2px solid #00ff41; color: #00ff41; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 15px 35px; transition: 0.3s; box-shadow: 0 0 10px rgba(0,255,65,0.3);" onmouseover="this.style.background='#00ff41'; this.style.color='#0d0208'; this.style.boxShadow='0 0 25px #00ff41'" onmouseout="this.style.background='transparent'; this.style.color='#00ff41'; this.style.boxShadow='0 0 10px rgba(0,255,65,0.3)'">
-                Initialize Hack (Register)
-            </a>
-            <a href="{{ url_for('auth.login') }}" class="btn btn-success btn-lg" style="background: #00ff41; border: 2px solid #00ff41; color: #0d0208; font-family: 'Courier New', monospace; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; padding: 15px 35px; transition: 0.3s; box-shadow: 0 0 15px #00ff41;" onmouseover="this.style.background='transparent'; this.style.color='#00ff41'; this.style.boxShadow='0 0 25px #00ff41'" onmouseout="this.style.background='#00ff41'; this.style.color='#0d0208'; this.style.boxShadow='0 0 15px #00ff41'">
-                Access Console (Login)
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- Features Section (Why Fintech Security?) -->
-<div class="row" style="margin-top: 50px; margin-bottom: 50px; font-family: 'Courier New', monospace;">
-    <div class="col-md-4" style="margin-bottom: 20px;">
-        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
-            <h4 style="color: #fff; font-weight: bold;">⚡ Real-World Simulations</h4>
-            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">Hands-on CTF challenges modeled after real attacks on mobile money, banking APIs, and ledger systems.</p>
-        </div>
-    </div>
-    <div class="col-md-4" style="margin-bottom: 20px;">
-        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
-            <h4 style="color: #fff; font-weight: bold;">🏆 Fintech Talent Assessment</h4>
-            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">A specialized platform for financial institutions to vet, train, and test their defense teams against top-tier threats.</p>
-        </div>
-    </div>
-    <div class="col-md-4" style="margin-bottom: 20px;">
-        <div style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0,10,0,0.6); height: 100%;">
-            <h4 style="color: #fff; font-weight: bold;">🔒 Advanced Telemetry</h4>
-            <p style="color: #888; font-size: 0.95rem; margin-top: 10px;">Live scoreboard podium tracking vulnerabilities patched and malicious flags captured in real time.</p>
-        </div>
-    </div>
-</div>
+	<div class="container">
+	{{ content | safe }}
+	</div>
 {% endblock %}

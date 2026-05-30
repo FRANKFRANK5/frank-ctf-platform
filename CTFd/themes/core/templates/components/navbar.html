@@ -1,55 +1,24 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41;">
-    <div class="container">
-        <a class="navbar-brand" href="/" style="color: #00ff41; text-shadow: 0 0 10px #00ff41; font-weight: bold;">
+<nav style="background: #0d0208; border-bottom: 2px solid #00ff41; padding: 15px 0;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;">
+        <a href="/" style="color: #00ff41; text-decoration: none; font-weight: bold; font-size: 20px;">
             ⚡ IAA CYBER CHAMPIONS
         </a>
         
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/">🏠 HOME</a>
-                </li>
-                
-                <!-- CHECK LOGIN USING SESSION - NO get_current_user() -->
-                {% if session.get('user_id') %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/challenges">⚔️ CHALLENGES</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/scoreboard">📊 SCOREBOARD</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/teams">👥 TEAMS</a>
-                    </li>
-                    
-                    {% if session.get('type') == 'admin' %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/admin" style="color: #ff003c;">👑 ADMIN</a>
-                    </li>
-                    {% endif %}
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="/logout">🚪 LOGOUT</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="/register">📝 REGISTER</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/login">🔐 LOGIN</a>
-                    </li>
-                {% endif %}
-            </ul>
+        <div>
+            <a href="/" style="color: white; text-decoration: none; margin: 0 10px;">HOME</a>
+            {% if session.get('user_id') %}
+                <a href="/challenges" style="color: white; text-decoration: none; margin: 0 10px;">CHALLENGES</a>
+                <a href="/scoreboard" style="color: white; text-decoration: none; margin: 0 10px;">SCOREBOARD</a>
+                <a href="/logout" style="color: #ff003c; text-decoration: none; margin: 0 10px;">LOGOUT</a>
+            {% else %}
+                <a href="/register" style="color: #00ff41; text-decoration: none; margin: 0 10px;">REGISTER</a>
+                <a href="/login" style="color: #00ff41; text-decoration: none; margin: 0 10px;">LOGIN</a>
+            {% endif %}
         </div>
     </div>
 </nav>
 
 <style>
     body { padding-top: 80px; }
-    .nav-link { transition: all 0.3s ease; margin: 0 5px; color: #fff !important; }
-    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); }
+    a:hover { opacity: 0.8; }
 </style>

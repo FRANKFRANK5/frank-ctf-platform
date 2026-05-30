@@ -137,27 +137,18 @@ def list_admins():
         return admins
 
 # =========================================================================
-# 🚀 RUN ON STARTUP (Inatekelezwa na Gunicorn Mtandaoni)
+# 🚀 ISOATE STARTUP PROCESSES FROM LIVE SEVER (Ziba Kosa la 500)
 # =========================================================================
-try:
-    logger.info("=" * 50)
-    logger.info("[*] Initializing Secure Admin Setup...")
-    logger.info("=" * 50)
-    
-    success = secure_admin_setup()
-    
-    if success:
-        logger.info("[✓] Admin setup completed!")
-        list_admins()
-    else:
-        logger.error("[✗] Admin setup failed! Check environment variables.")
-    
-    # Debug: Check environment variables
-    logger.info("[*] Environment check:")
-    logger.info(f"    ADMIN_EMAIL: {'✓' if os.environ.get('ADMIN_EMAIL') else '✗'}")
-    logger.info(f"    ADMIN_USERNAME: {'✓' if os.environ.get('ADMIN_USERNAME') else '✗'}")
-    logger.info(f"    ADMIN_PASS: {'✓' if os.environ.get('ADMIN_PASS') else '✗'}")
-    logger.info("=" * 50)
-    
-except Exception as e:
-    logger.error(f"[-] Startup error: {str(e)}")
+if __name__ == "__main__":
+    # Hii itakimbia tu kama unaiwasha kompyutani, haitakwaza live workers wa Render
+    try:
+        logger.info("=" * 50)
+        logger.info("[*] Initializing Local Admin Setup Script...")
+        logger.info("=" * 50)
+        success = secure_admin_setup()
+        if success:
+            logger.info("[✓] Local admin setup completed!")
+            list_admins()
+        logger.info("=" * 50)
+    except Exception as e:
+        logger.error(f"[-] Bypassed startup script error: {str(e)}")

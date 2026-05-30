@@ -1,6 +1,5 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41; box-shadow: 0 0 15px #00ff41;">
     <div class="container">
-        <!-- Brand/Logo -->
         <a class="navbar-brand" href="/" style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold; letter-spacing: 2px;">
             ⚡ IAA CYBER CHAMPIONS
         </a>
@@ -11,50 +10,49 @@
         
         <div class="collapse navbar-collapse" id="navbarContent">
             <ul class="navbar-nav ml-auto">
-                <!-- HOME - everyone can see -->
                 <li class="nav-item">
-                    <a class="nav-link" href="/">🏠 HOME</a>
+                    <a class="nav-link" href="/" style="color: #ffffff;">🏠 HOME</a>
                 </li>
                 
-                <!-- Check if user is logged in - IMPORTANT FIX! -->
-                {% if session.get('user_id') %}
-                    <!-- LOGGED IN USER - Show these -->
+                <!-- IMPORTANT: CTFd native authentication check -->
+                {% if get_current_user().is_authenticated %}
+                    <!-- Logged in user -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/challenges">⚔️ CHALLENGES</a>
+                        <a class="nav-link" href="/challenges" style="color: #ffffff;">⚔️ CHALLENGES</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/scoreboard">📊 SCOREBOARD</a>
+                        <a class="nav-link" href="/scoreboard" style="color: #ffffff;">📊 SCOREBOARD</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/teams">👥 TEAMS</a>
+                        <a class="nav-link" href="/teams" style="color: #ffffff;">👥 TEAMS</a>
                     </li>
                     
-                    <!-- Admin Panel - Only for admin users -->
-                    {% if session.get('admin') or session.get('type') == 'admin' %}
+                    <!-- Admin panel - only for admins -->
+                    {% if get_current_user().type == 'admin' %}
                     <li class="nav-item">
-                        <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c;">👑 ADMIN</a>
+                        <a class="nav-link" href="/admin" style="color: #ff003c; text-shadow: 0 0 5px #ff003c; font-weight: bold;">👑 ADMIN</a>
                     </li>
                     {% endif %}
                     
-                    <!-- Profile Dropdown -->
+                    <!-- User dropdown -->
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
-                            👤 {{ session.get('user_name', 'Account') }}
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" style="color: #00ff41; font-weight: bold;">
+                            👤 {{ get_current_user().name }}
                         </a>
                         <div class="dropdown-menu" style="background: #0d0208; border: 1px solid #00ff41;">
-                            <a class="dropdown-item" href="/profile">📋 Profile</a>
-                            <a class="dropdown-item" href="/settings">⚙️ Settings</a>
+                            <a class="dropdown-item" href="/profile" style="color: #ffffff;">📋 Profile</a>
+                            <a class="dropdown-item" href="/settings" style="color: #ffffff;">⚙️ Settings</a>
                             <div class="dropdown-divider" style="border-color: #00ff41;"></div>
                             <a class="dropdown-item" href="/logout" style="color: #ff003c;">🚪 Logout</a>
                         </div>
                     </li>
                 {% else %}
-                    <!-- NOT LOGGED IN - Show Register and Login -->
+                    <!-- Not logged in -->
                     <li class="nav-item">
-                        <a class="nav-link" href="/register">📝 REGISTER</a>
+                        <a class="nav-link" href="/register" style="color: #00ff41; font-weight: bold;">📝 REGISTER</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login">🔐 LOGIN</a>
+                        <a class="nav-link" href="/login" style="color: #00ff41; font-weight: bold;">🔐 LOGIN</a>
                     </li>
                 {% endif %}
             </ul>
@@ -64,14 +62,40 @@
 
 <style>
     body { padding-top: 80px; }
+    
     .navbar-brand { animation: neonPulse 2s infinite; }
+    
     @keyframes neonPulse {
         0%, 100% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
         50% { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
     }
-    .nav-link { transition: all 0.3s ease; }
-    .nav-link:hover { color: #00ff41 !important; transform: translateY(-2px); text-shadow: 0 0 5px #00ff41; }
-    .dropdown-menu { box-shadow: 0 0 20px rgba(0, 255, 65, 0.3); }
-    .dropdown-item { transition: all 0.3s ease; }
-    .dropdown-item:hover { transform: translateX(5px); background: rgba(0, 255, 65, 0.1); }
+    
+    .nav-link { 
+        transition: all 0.3s ease; 
+        margin: 0 5px;
+    }
+    
+    .nav-link:hover { 
+        color: #00ff41 !important; 
+        transform: translateY(-2px); 
+        text-shadow: 0 0 5px #00ff41; 
+    }
+    
+    .dropdown-menu { 
+        background: #0d0208 !important; 
+        border: 1px solid #00ff41 !important; 
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+    
+    .dropdown-item { 
+        transition: all 0.3s ease; 
+        color: #ffffff !important;
+        background: transparent !important;
+    }
+    
+    .dropdown-item:hover { 
+        transform: translateX(5px); 
+        background: rgba(0, 255, 65, 0.1) !important;
+        color: #00ff41 !important;
+    }
 </style>

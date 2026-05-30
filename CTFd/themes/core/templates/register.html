@@ -1,78 +1,273 @@
 {% extends "base.html" %}
 
 {% block stylesheets %}
+<style>
+    .auth-container {
+        max-width: 500px;
+        margin: 50px auto;
+        padding: 30px;
+        background: rgba(13, 2, 8, 0.95);
+        border: 2px solid #00ff41;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+    }
+
+    .auth-title {
+        color: #00ff41;
+        text-align: center;
+        font-family: 'Courier New', monospace;
+        font-size: 2rem;
+        margin-bottom: 30px;
+        text-shadow: 0 0 10px #00ff41;
+        letter-spacing: 2px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        color: #00ff41;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .form-control {
+        background: #0d0208 !important;
+        border: 1px solid #00ff41 !important;
+        color: #00ff41 !important;
+        font-family: 'Courier New', monospace;
+        padding: 12px 15px;
+        border-radius: 8px;
+        width: 100%;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        outline: none;
+        box-shadow: 0 0 15px #00ff41 !important;
+        border-color: #00ff41 !important;
+        background: #0a0305 !important;
+    }
+
+    .form-control::placeholder {
+        color: #00ff4133;
+    }
+
+    .form-text {
+        color: #888;
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
+
+    .btn-register {
+        background: #00ff41;
+        border: 2px solid #00ff41;
+        color: #0d0208;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 12px 25px;
+        border-radius: 8px;
+        width: 100%;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-size: 1rem;
+    }
+
+    .btn-register:hover {
+        background: transparent;
+        color: #00ff41;
+        box-shadow: 0 0 20px #00ff41;
+        transform: scale(1.02);
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid rgba(0, 255, 65, 0.2);
+    }
+
+    .login-link a {
+        color: #00ff41;
+        text-decoration: none;
+        font-family: 'Courier New', monospace;
+    }
+
+    .login-link a:hover {
+        text-shadow: 0 0 5px #00ff41;
+    }
+
+    .alert {
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.9rem;
+    }
+
+    .alert-danger {
+        background: rgba(255, 0, 60, 0.1);
+        border: 1px solid #ff003c;
+        color: #ff003c;
+    }
+
+    .alert-success {
+        background: rgba(0, 255, 65, 0.1);
+        border: 1px solid #00ff41;
+        color: #00ff41;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 15px 0;
+    }
+
+    .checkbox-group input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+        accent-color: #00ff41;
+    }
+
+    .checkbox-group label {
+        margin: 0;
+        cursor: pointer;
+        color: #888;
+        font-size: 0.85rem;
+    }
+
+    .checkbox-group a {
+        color: #00ff41;
+    }
+
+    hr {
+        border-color: #00ff4133;
+        margin: 20px 0;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="jumbotron">
-	<div class="container">
-		<h1>Register</h1>
-	</div>
+<div class="auth-container">
+    <h1 class="auth-title">⚡ INITIALIZE ACCOUNT</h1>
+    
+    {% include "components/errors.html" %}
+
+    {% if integrations.mlc() %}
+    <a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}" style="background: transparent; border: 2px solid #00ff41; color: #00ff41; margin-bottom: 20px;">
+        🔐 Register with Major League Cyber
+    </a>
+    <hr>
+    {% endif %}
+
+    {% with form = Forms.auth.RegistrationForm() %}
+    {% from "macros/forms.html" import render_extra_fields %}
+    <form method="post" accept-charset="utf-8" autocomplete="off" role="form">
+        <div class="form-group">
+            <label for="name">👤 USERNAME</label>
+            {{ form.name(class="form-control", placeholder="Choose a username", id="name", value=name) }}
+            <small class="form-text text-muted">Your username on the platform (visible to others)</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">📧 EMAIL ADDRESS</label>
+            {{ form.email(class="form-control", placeholder="Enter your email", id="email", value=email) }}
+            <small class="form-text text-muted">Never shown to the public. Used for account recovery.</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">🔒 PASSWORD</label>
+            {{ form.password(class="form-control", placeholder="Create a strong password", id="password", value=password) }}
+            <small class="form-text text-muted">Minimum 8 characters. Use a mix of letters, numbers, and symbols.</small>
+        </div>
+        
+        {{ form.nonce() }}
+        
+        {{ render_extra_fields(form.extra) }}
+        
+        <div class="checkbox-group">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">
+                I agree to the <a href="{{ Configs.tos_link }}" target="_blank">Terms of Service</a> and 
+                <a href="{{ Configs.privacy_link }}" target="_blank">Privacy Policy</a>
+            </label>
+        </div>
+        
+        <div class="form-group">
+            <button type="submit" class="btn-register">🚀 DEPLOY ACCOUNT</button>
+        </div>
+        
+        {% if Configs.tos_or_privacy %}
+        <div class="login-link">
+            <small class="text-muted" style="color: #888;">
+                By registering, you agree to our 
+                <a href="{{ Configs.privacy_link }}" target="_blank">privacy policy</a>
+                and <a href="{{ Configs.tos_link }}" target="_blank">terms of service</a>
+            </small>
+        </div>
+        {% endif %}
+    </form>
+    {% endwith %}
+    
+    <div class="login-link">
+        <span style="color: #888;">Already have an account?</span>
+        <a href="{{ url_for('auth.login') }}">🔐 Login here</a>
+    </div>
 </div>
-<div class="container">
-	<div class="row">
-		<div class="col-md-6 offset-md-3">
-			{% include "components/errors.html" %}
 
-			{% if integrations.mlc() %}
-			<a class="btn btn-secondary btn-lg btn-block" href="{{ url_for('auth.oauth_login') }}">
-				Login with Major League Cyber
-			</a>
-
-			<hr>
-			{% endif %}
-
-			{% with form = Forms.auth.RegistrationForm() %}
-			{% from "macros/forms.html" import render_extra_fields %}
-			<form method="post" accept-charset="utf-8" autocomplete="off" role="form">
-				<div class="form-group">
-					<b>{{ form.name.label }}</b>
-					{{ form.name(class="form-control", value=name) }}
-					<small class="form-text text-muted">
-						Your username on the site
-					</small>
-				</div>
-				<div class="form-group">
-					<b>{{ form.email.label }}</b>
-					{{ form.email(class="form-control", value=email) }}
-					<small class="form-text text-muted">
-						Never shown to the public
-					</small>
-				</div>
-				<div class="form-group">
-					<b>{{ form.password.label }}</b>
-					{{ form.password(class="form-control", value=password) }}
-					<small class="form-text text-muted">
-						Password used to log into your account
-					</small>
-				</div>
-				{{ form.nonce() }}
-
-				{{ render_extra_fields(form.extra) }}
-
-				<div class="row pt-3">
-					<div class="col-md-12">
-						{{ form.submit(class="btn btn-md btn-primary btn-outlined float-right") }}
-					</div>
-				</div>
-
-				{% if Configs.tos_or_privacy %}
-				<div class="row pt-3">
-					<div class="col-md-12 text-center">
-						<small class="text-muted text-center">
-							By registering, you agree to the
-							<a href="{{ Configs.privacy_link }}" rel="noopener" target="_blank">privacy policy</a>
-							and <a href="{{ Configs.tos_link }}" rel="noopener" target="_blank">terms of service</a>
-						</small>
-					</div>
-				</div>
-				{% endif %}
-			</form>
-			{% endwith %}
-		</div>
-	</div>
-</div>
-{% endblock %}
-
-{% block scripts %}
+<script>
+    // Ensure terms checkbox is required
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const termsCheckbox = document.getElementById('terms');
+        if (termsCheckbox && !termsCheckbox.checked) {
+            e.preventDefault();
+            alert('Please agree to the Terms of Service and Privacy Policy to register.');
+        }
+    });
+    
+    // Add neon effect on input focus
+    document.querySelectorAll('.form-control').forEach(input => {
+        input.addEventListener('focus', function() {
+            if (this.parentElement.querySelector('label')) {
+                this.parentElement.querySelector('label').style.textShadow = '0 0 5px #00ff41';
+            }
+        });
+        input.addEventListener('blur', function() {
+            if (this.parentElement.querySelector('label')) {
+                this.parentElement.querySelector('label').style.textShadow = 'none';
+            }
+        });
+    });
+    
+    // Password strength indicator (optional)
+    const passwordInput = document.getElementById('password');
+    if (passwordInput) {
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]+/)) strength++;
+            if (password.match(/[A-Z]+/)) strength++;
+            if (password.match(/[0-9]+/)) strength++;
+            if (password.match(/[$@#&!]+/)) strength++;
+            
+            const strengthText = document.querySelector('.password-strength');
+            if (strengthText) {
+                if (strength <= 2) strengthText.textContent = 'Weak';
+                else if (strength <= 4) strengthText.textContent = 'Medium';
+                else strengthText.textContent = 'Strong';
+            }
+        });
+    }
+</script>
 {% endblock %}

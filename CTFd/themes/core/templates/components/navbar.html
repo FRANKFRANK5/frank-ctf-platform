@@ -1,20 +1,21 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208 !important; border-bottom: 2px solid #00ff41 !important; box-shadow: 0 0 15px #00ff41 !important; display: flex !important; justify-content: space-between !important; align-items: center !important; padding: 15px 30px !important; position: fixed !important; top: 0 !important; width: 100% !important; z-index: 1030 !important;">
     <div class="container" style="display: flex !important; justify-content: space-between !important; align-items: center !important; width: 100% !important; max-width: 1200px; margin: 0 auto;">
+        
         <!-- Brand/Logo with Neon Effect -->
         <a class="navbar-brand" href="/" style="color: #00ff41 !important; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold !important; letter-spacing: 2px; font-family: 'Courier New', monospace; text-decoration: none !important; font-size: 1.4rem !important;">
-            ⚡ IAA CYBER CHAMPIONS
+            ⚡ IAA CYBER CHAMPIONS {% if User.type == 'admin' %}<span style="color: #ff003c; font-size: 0.8rem;">[ADMIN_CONSOLE]</span>{% endif %}
         </a>
         
         <!-- Navbar Links -->
         <div id="navbarContent">
-            <ul style="list-style: none !important; display: flex !important; gap: 25px !important; margin: 0 !important; padding: 0 !important; flex-direction: row !important;">
+            <ul style="list-style: none !important; display: flex !important; gap: 25px !important; margin: 0 !important; padding: 0 !important; flex-direction: row !important; align-items: center !important;">
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
                         🏠 HOME
                     </a>
                 </li>
                 
-                <!-- 🔐 KWA AJILI YA WATUMIAJI AMBAO HAJAINGIA MTANDAONI TU (ANONYMOUS USERS) -->
+                <!-- 🔐 1. KWA AJILI YA WATUMIAJI AMBAO HAJAINGIA MTANDAONI (ANONYMOUS) -->
                 {% if not Authed %}
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/register" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
@@ -28,7 +29,7 @@
                 </li>
                 {% endif %}
                 
-                <!-- ⚔️ KWA AJILI YA WALIOINGIA TU (AUTHENTICATED USERS ONLY) -->
+                <!-- ⚔️ 2. KWA AJILI YA WALIOINGIA MTANDAONI TU (AUTHENTICATED USERS) -->
                 {% if Authed %}
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/challenges" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
@@ -45,6 +46,17 @@
                         👥 USERS
                     </a>
                 </li>
+                
+                <!-- 👑 KITUFE CHA ADMIN PANEL -->
+                {% if User.type == 'admin' %}
+                <li style="list-style: none !important; display: inline-block !important;">
+                    <a href="/admin" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important; text-shadow: 0 0 5px #ff003c;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 10px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='0 0 5px #ff003c'">
+                        ⚙️ ADMIN Panel
+                    </a>
+                </li>
+                {% endif %}
+                
+                <!-- 🚪 KITUFE CHA LOGOUT -->
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/logout" style="color: #ff003c !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#fff'; this.style.textShadow='0 0 5px #ff003c'" onmouseout="this.style.color='#ff003c'; this.style.textShadow='none'">
                         🚪 LOGOUT
@@ -56,7 +68,7 @@
     </div>
 </nav>
 
-<!-- Spacing adjustment -->
+<!-- Spacing and Layout Override -->
 <style>
     body {
         padding-top: 90px !important;

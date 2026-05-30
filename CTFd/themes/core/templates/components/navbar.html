@@ -14,8 +14,8 @@
                     </a>
                 </li>
                 
-                <!-- NJIA ASILI YA CTFD: Kama mtumiaji HAJAINGIA (Anonymous) -->
-                {% if not Session.id %}
+                <!-- 🔐 KWA AJILI YA WATUMIAJI AMBAO HAJAINGIA MTANDAONI TU (ANONYMOUS USERS) -->
+                {% if not Authed %}
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/register" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
                         📝 REGISTER
@@ -28,8 +28,8 @@
                 </li>
                 {% endif %}
                 
-                <!-- NJIA ASILI YA CTFD: Kama mtumiaji AMESHAINGIA (Authenticated) -->
-                {% if Session.id %}
+                <!-- ⚔️ KWA AJILI YA WALIOINGIA TU (AUTHENTICATED USERS ONLY) -->
+                {% if Authed %}
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/challenges" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
                         ⚔️ CHALLENGES
@@ -38,6 +38,11 @@
                 <li style="list-style: none !important; display: inline-block !important;">
                     <a href="/scoreboard" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
                         📊 SCOREBOARD
+                    </a>
+                </li>
+                <li style="list-style: none !important; display: inline-block !important;">
+                    <a href="/users" style="color: #fff !important; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold; text-decoration: none !important; font-size: 0.95rem !important;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        👥 USERS
                     </a>
                 </li>
                 <li style="list-style: none !important; display: inline-block !important;">

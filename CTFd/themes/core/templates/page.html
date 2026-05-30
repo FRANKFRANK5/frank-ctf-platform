@@ -1,7 +1,353 @@
 {% extends "base.html" %}
 
+{% block stylesheets %}
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: rgba(13, 2, 8, 0.95);
+        border: 2px solid #00ff41;
+        border-radius: 15px;
+        padding: 60px 30px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+        box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
+        text-align: center;
+    }
+
+    /* Glitch Effect for Main Title */
+    .neon-glitch {
+        color: #00ff41;
+        text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        letter-spacing: 3px;
+        font-size: 3rem;
+        margin-bottom: 20px;
+        position: relative;
+        animation: glitch 3s infinite;
+    }
+
+    .neon-glitch::before,
+    .neon-glitch::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .neon-glitch::before {
+        animation: glitch-effect 3s infinite;
+        color: #ff003c;
+        z-index: -1;
+    }
+
+    .neon-glitch::after {
+        animation: glitch-effect 2s infinite;
+        color: #00ff41;
+        z-index: -2;
+    }
+
+    @keyframes glitch {
+        0%, 100% { transform: skew(0deg, 0deg); }
+        95% { transform: skew(0deg, 0deg); }
+        96% { transform: skew(5deg, 2deg); }
+        97% { transform: skew(-3deg, -1deg); }
+        98% { transform: skew(2deg, 0deg); }
+    }
+
+    @keyframes glitch-effect {
+        0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0); }
+        95% { clip-path: inset(0 0 0 0); transform: translate(0); }
+        96% { clip-path: inset(20% 0 30% 0); transform: translate(-2px); }
+        97% { clip-path: inset(60% 0 10% 0); transform: translate(2px); }
+        98% { clip-path: inset(10% 0 70% 0); transform: translate(-1px); }
+    }
+
+    .neon-subtitle {
+        color: #fff;
+        text-shadow: 0 0 5px #00ff41;
+        font-family: 'Courier New', monospace;
+        margin-bottom: 30px;
+        letter-spacing: 1px;
+        font-size: 1.5rem;
+    }
+
+    .hero-description {
+        max-width: 800px;
+        margin: 0 auto 40px auto;
+    }
+
+    .cyber-text {
+        color: #00ff41;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        border-left: 3px solid #00ff41;
+        padding-left: 20px;
+        text-align: left;
+    }
+
+    /* Neon Buttons */
+    .btn-neon {
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 15px 35px;
+        transition: all 0.3s ease;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+        display: inline-block;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .btn-neon-primary {
+        border: 2px solid #00ff41;
+        color: #00ff41;
+        background: transparent;
+        box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+    }
+
+    .btn-neon-primary:hover {
+        background: #00ff41;
+        color: #0d0208;
+        box-shadow: 0 0 25px #00ff41;
+        transform: scale(1.05);
+    }
+
+    .btn-neon-secondary {
+        background: #00ff41;
+        border: 2px solid #00ff41;
+        color: #0d0208;
+        box-shadow: 0 0 15px #00ff41;
+    }
+
+    .btn-neon-secondary:hover {
+        background: transparent;
+        color: #00ff41;
+        box-shadow: 0 0 25px #00ff41;
+        transform: scale(1.05);
+    }
+
+    .btn-neon .btn-icon {
+        margin-left: 8px;
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-neon:hover .btn-icon {
+        transform: translateX(5px);
+    }
+
+    .action-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    /* Features Section */
+    .features-section {
+        margin: 50px 0;
+        font-family: 'Courier New', monospace;
+    }
+
+    .section-title {
+        color: #00ff41;
+        text-align: center;
+        margin-bottom: 50px;
+        font-size: 2rem;
+        font-family: 'Courier New', monospace;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .title-accent {
+        color: #ff003c;
+        animation: blink-accent 1.5s infinite;
+    }
+
+    @keyframes blink-accent {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.3; }
+    }
+
+    .features-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .feature-card {
+        margin-bottom: 20px;
+    }
+
+    .feature-item {
+        border: 1px dashed #00ff41;
+        padding: 25px;
+        border-radius: 10px;
+        background: rgba(0, 10, 0, 0.6);
+        height: 100%;
+        position: relative;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+
+    .feature-item:hover {
+        transform: translateY(-5px);
+        border: 1px solid #00ff41;
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+    }
+
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        position: relative;
+        display: inline-block;
+    }
+
+    .icon-pulse {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 255, 65, 0.3);
+        border-radius: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        animation: pulse-icon 2s infinite;
+    }
+
+    @keyframes pulse-icon {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0.5; }
+        100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+    }
+
+    .feature-title {
+        color: #fff;
+        font-weight: bold;
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+    }
+
+    .feature-description {
+        color: #888;
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+
+    .feature-glow {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, #00ff41, transparent);
+        transform: translateX(-100%);
+        transition: transform 0.5s ease;
+    }
+
+    .feature-item:hover .feature-glow {
+        transform: translateX(0%);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .hero-section { padding: 40px 20px; }
+        .neon-glitch { font-size: 2rem; }
+        .neon-subtitle { font-size: 1rem; }
+        .cyber-text { font-size: 0.9rem; padding-left: 15px; }
+        .btn-neon { padding: 10px 25px; font-size: 0.9rem; }
+        .section-title { font-size: 1.5rem; }
+    }
+
+    @media (max-width: 576px) {
+        .action-buttons { flex-direction: column; align-items: stretch; }
+        .btn-neon { text-align: center; }
+        .feature-item { padding: 15px; }
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-	<div class="container">
-	{{ content | safe }}
-	</div>
+<!-- HERO SECTION -->
+<div class="hero-section">
+    <div class="container">
+        <h1 class="neon-glitch" data-text="IAA-CYBER-CHAMPIONS-PLATFORM-2026-GLOBAL-HUB">
+            IAA-CYBER-CHAMPIONS
+        </h1>
+        <div class="neon-subtitle">
+            GLOBAL HUB & FINTECH SECURITY ARENA
+        </div>
+        
+        <div class="hero-description">
+            <p class="cyber-text">
+                &gt;_ CORE_ENGINE: OPERATIONAL<br>
+                &gt;_ ARCHITECT: ENGINEER FRANK KARANI<br><br>
+                Welcome to Africa's premier gamified cybersecurity training platform. Engineered by Frank Karani specifically for the Fintech ecosystem, this platform simulates real-world financial attack vectors, banking API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
+            </p>
+        </div>
+
+        <div class="action-buttons">
+            {% if not current_user.is_authenticated %}
+                <a href="{{ url_for('auth.register') }}" class="btn-neon btn-neon-primary">
+                    Initialize Hack <span class="btn-icon">➔</span>
+                </a>
+                <a href="{{ url_for('auth.login') }}" class="btn-neon btn-neon-secondary">
+                    Access Console <span class="btn-icon">🔑</span>
+                </a>
+            {% else %}
+                <a href="{{ url_for('views.challenges') }}" class="btn-neon btn-neon-primary">
+                    Enter Arena <span class="btn-icon">⚔️</span>
+                </a>
+                <a href="{{ url_for('views.scoreboard_listing') }}" class="btn-neon btn-neon-secondary">
+                    View Scoreboard <span class="btn-icon">📊</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- FEATURES SECTION -->
+<div class="features-section container">
+    <h2 class="section-title">
+        ARENA MODULES <span class="title-accent">_</span>
+    </h2>
+    <div class="features-grid row">
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">⚡ <span class="icon-pulse"></span></div>
+                <div class="feature-title">Real-World Simulations</div>
+                <div class="feature-description">
+                    Hands-on CTF challenges modeled after real-world exploits targeting mobile money layers, banking APIs, and financial node infrastructures.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">🛡️ <span class="icon-pulse"></span></div>
+                <div class="feature-title">Fintech Vetting Labs</div>
+                <div class="feature-description">
+                    A secure corporate framework designed for financial institutions and digital banks to train, test, and vet their security defense units.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+        <div class="feature-card col-md-4">
+            <div class="feature-item">
+                <div class="feature-icon">🌐 <span class="icon-pulse"></span></div>
+                <div class="feature-title">Live Telemetry Stream</div>
+                <div class="feature-description">
+                    Advanced cryptographic scoring and live dashboards tracking team standings across the central global communication hub.
+                </div>
+                <div class="feature-glow"></div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

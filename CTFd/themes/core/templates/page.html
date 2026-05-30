@@ -1,65 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<!-- HERO SECTION YA KISHUA -->
-<div class="hero-section" style="background: rgba(13, 2, 8, 0.95); border: 2px solid #00ff41; border-radius: 15px; padding: 60px 30px; margin-top: 40px; margin-bottom: 40px; box-shadow: 0 0 30px rgba(0, 255, 65, 0.2); text-align: center;">
-    <div class="container">
-        <!-- Jina Rasmi la Jukwaa Lako -->
-        <h1 class="neon-glitch" data-text="IAA-CYBER-CHAMPIONS-PLATFORM-2026-GLOBAL-HUB" style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-family: 'Courier New', monospace; font-weight: bold; letter-spacing: 3px; font-size: 3rem; margin-bottom: 20px;">
-            IAA-CYBER-CHAMPIONS
-        </h1>
-        <div class="neon-subtitle" style="color: #fff; text-shadow: 0 0 5px #00ff41; font-family: 'Courier New', monospace; margin-bottom: 30px; letter-spacing: 1px; font-size: 1.5rem;">
-            GLOBAL HUB & FINTECH SECURITY ARENA
-        </div>
-        
-        <!-- Maelezo ya Mfumo na Mtengenezaji -->
-        <div class="hero-description" style="max-width: 800px; margin: 0 auto 40px auto;">
-            <p class="cyber-text" style="color: #00ff41; font-family: 'Courier New', monospace; font-size: 1.1rem; line-height: 1.8; border-left: 3px solid #00ff41; padding-left: 20px; text-align: left;">
-                &gt;_ CORE_ENGINE: OPERATIONAL<br>
-                &gt;_ ARCHITECT: ENGINEER FRANK KARANI<br><br>
-                Welcome to Africa's premier gamified cybersecurity training platform. Engineered by Frank Karani specifically for the Fintech ecosystem, this platform simulates real-world financial attack vectors, banking API vulnerabilities, and infrastructure exploits. Defend systems, capture flags, and secure the future of digital finance.
-            </p>
-        </div>
-
-        <!-- Vitufe Vya Kuingia na Kujisajili -->
-        <div class="action-buttons" style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-            <a href="/register" class="btn btn-primary" style="background: #00ff41 !important; border-color: #00ff41 !important; color: #0d0208 !important; padding: 12px 25px; border-radius: 8px; font-weight: bold; text-decoration: none;">
-                Initialize Hack (Register)
-            </a>
-            <a href="/login" class="btn btn-secondary" style="background: transparent !important; border: 2px solid #00ff41 !important; color: #00ff41 !important; padding: 12px 25px; border-radius: 8px; font-weight: bold; text-decoration: none;">
-                Access Console (Login)
-            </a>
-        </div>
-    </div>
-</div>
-
-<!-- SEHEMU YA VIPENGELE VYA MFUMO (FEATURES) -->
-<div class="features-section container" style="margin: 50px auto; font-family: 'Courier New', monospace;">
-    <div class="features-grid row">
-        <div class="feature-card col-md-4" style="margin-bottom: 20px;">
-            <div class="feature-item" style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0, 10, 0, 0.6); height: 100%;">
-                <div class="feature-title" style="color: #fff; font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">⚡ Real-World Simulations</div>
-                <div class="feature-description" style="color: #b0ffb0; font-size: 0.9rem; line-height: 1.5;">
-                    Hands-on CTF challenges modeled after real-world exploits targeting mobile money layers, banking APIs, and financial node infrastructures.
-                </div>
-            </div>
-        </div>
-        <div class="feature-card col-md-4" style="margin-bottom: 20px;">
-            <div class="feature-item" style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0, 10, 0, 0.6); height: 100%;">
-                <div class="feature-title" style="color: #fff; font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">🛡️ Fintech Vetting Labs</div>
-                <div class="feature-description" style="color: #b0ffb0; font-size: 0.9rem; line-height: 1.5;">
-                    A secure corporate framework designed for financial institutions and digital banks to train, test, and vet their security defense units.
-                </div>
-            </div>
-        </div>
-        <div class="feature-card col-md-4" style="margin-bottom: 20px;">
-            <div class="feature-item" style="border: 1px dashed #00ff41; padding: 25px; border-radius: 10px; background: rgba(0, 10, 0, 0.6); height: 100%;">
-                <div class="feature-title" style="color: #fff; font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">🌐 Live Telemetry Stream</div>
-                <div class="feature-description" style="color: #b0ffb0; font-size: 0.9rem; line-height: 1.5;">
-                    Advanced cryptographic scoring and live dashboards tracking team standings across the central global communication hub.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="container">
+	{{ content | safe }}
+	</div>
 {% endblock %}

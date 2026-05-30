@@ -2,7 +2,7 @@
    CYBER THEME - TryHackMe + HackTheBox Style
    ========================================= */
 
-/* Loading Overlay - IMEREKEBISHWA ILI ISIFUNIKE LOGIN */
+/* Loading Overlay */
 .loading-overlay {
     position: fixed;
     top: 0;
@@ -11,7 +11,7 @@
     height: 100%;
     background: rgba(13, 2, 8, 0.95);
     z-index: 9999;
-    display: none; /* Imerekebishwa kutoka flex kwenda none ili isizibe fomu */
+    display: none;
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(5px);
@@ -239,7 +239,7 @@
     margin-left: 5px;
 }
 
-/* Terminal Overlay - IMEREKEBISHWA ILI ISIFUNIKE LOGIN */
+/* Terminal Overlay */
 .terminal-overlay {
     position: fixed;
     top: 0;
@@ -248,7 +248,7 @@
     height: 100%;
     background: rgba(0, 0, 0, 0.9);
     z-index: 10000;
-    display: none; /* Imerekebishwa kutoka flex kwenda none ili isizibe fomu */
+    display: none;
     justify-content: center;
     align-items: center;
 }
@@ -446,7 +446,6 @@
     box-shadow: 0 0 10px #00ff41;
 }
 
-/* KAMILISHA KODI YA BUTTON YA DANGER ILIYOKATIKA */
 .btn-danger {
     background: transparent !important;
     border-color: #ff003c !important;
@@ -461,7 +460,194 @@
     transform: scale(1.02);
 }
 
-/* Responsive Footer */
+.btn-success {
+    background: #00ff41 !important;
+    border-color: #00ff41 !important;
+    color: #0d0208 !important;
+}
+
+.btn-success:hover {
+    background: transparent !important;
+    color: #00ff41 !important;
+    box-shadow: 0 0 20px #00ff41;
+}
+
+.btn-outline-success {
+    border: 2px solid #00ff41 !important;
+    color: #00ff41 !important;
+    background: transparent !important;
+}
+
+.btn-outline-success:hover {
+    background: #00ff41 !important;
+    color: #0d0208 !important;
+    box-shadow: 0 0 20px #00ff41;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -10px;
+    margin-left: -10px;
+}
+
+.form-row > .form-group {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+.custom-control {
+    position: relative;
+    display: block;
+    min-height: 1.5rem;
+    padding-left: 1.5rem;
+}
+
+.custom-control-input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.custom-control-label {
+    color: #888;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+}
+
+.custom-control-label::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background-color: #0d0208;
+    border: 1px solid #00ff41;
+    border-radius: 3px;
+}
+
+.custom-control-label::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    background: no-repeat 50%/50% 50%;
+}
+
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: #00ff41;
+    border-color: #00ff41;
+}
+
+.custom-control-input:checked ~ .custom-control-label::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%230d0208' d='M6.564.75l-3.59 3.612-1.538-1.55L0 4.26 2.974 7.25 8 2.193z'/%3e%3c/svg%3e");
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    border: 1px solid;
+}
+
+.alert-info {
+    background: rgba(0, 255, 65, 0.1) !important;
+    border-color: #00ff41 !important;
+    color: #00ff41 !important;
+}
+
+.alert-warning {
+    background: rgba(255, 215, 0, 0.1) !important;
+    border-color: #ffd700 !important;
+    color: #ffd700 !important;
+}
+
+.alert-danger {
+    background: rgba(255, 0, 60, 0.1) !important;
+    border-color: #ff003c !important;
+    color: #ff003c !important;
+}
+
+.alert-success {
+    background: rgba(0, 255, 65, 0.1) !important;
+    border-color: #00ff41 !important;
+    color: #00ff41 !important;
+}
+
+a {
+    color: #00ff41;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+a:hover {
+    color: #fff;
+    text-shadow: 0 0 5px #00ff41;
+    text-decoration: none;
+}
+
+.form-text {
+    color: #888;
+    font-size: 0.8rem;
+    margin-top: 5px;
+}
+
+.text-muted {
+    color: #888 !important;
+}
+
+.invalid-feedback {
+    color: #ff003c;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    margin-top: 5px;
+    display: block;
+}
+
+.form-control.is-invalid {
+    border-color: #ff003c !important;
+}
+
+.forgot-password {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.forgot-password a {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.forgot-password a:hover {
+    color: #00ff41;
+}
+
+.auth-nav {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(0, 255, 65, 0.2);
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
     .footer-row {
         flex-direction: column;
@@ -472,4 +658,62 @@
         flex-direction: column;
         text-align: center;
     }
+    
+    .footer-social {
+        justify-content: center;
+    }
+    
+    .auth-container {
+        margin: 30px 20px;
+        padding: 20px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+    
+    .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .forgot-password {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 576px) {
+    .auth-container {
+        margin: 20px 15px;
+        padding: 15px;
+    }
+    
+    .form-control {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.85rem;
+    }
+}
+
+/* Force visibility */
+form input,
+form button,
+form select,
+form textarea {
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+.auth-container {
+    display: block !important;
 }

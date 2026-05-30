@@ -1,0 +1,113 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background: #0d0208; border-bottom: 2px solid #00ff41; box-shadow: 0 0 15px #00ff41;">
+    <div class="container">
+        <!-- Brand/Logo with Neon Effect -->
+        <a class="navbar-brand" href="{{ url_for('views.static_html', page='index') }}" style="color: #00ff41; text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; font-weight: bold; letter-spacing: 2px;">
+            ⚡ IAA CYBER CHAMPIONS
+        </a>
+        
+        <!-- Toggle button for mobile -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" style="border-color: #00ff41;">
+            <span class="navbar-toggler-icon" style="color: #00ff41;"></span>
+        </button>
+        
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <ul class="navbar-nav ml-auto">
+                <!-- HOME - visible to everyone -->
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.static_html', page='index') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        🏠 HOME
+                    </a>
+                </li>
+                
+                <!-- FOR NON-LOGGED IN USERS (Wageni) -->
+                {% if not (session.get('user_id') or get_current_user().is_authenticated) %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.register') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        📝 REGISTER
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('auth.login') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        🔐 LOGIN
+                    </a>
+                </li>
+                {% endif %}
+                
+                <!-- FOR LOGGED IN USERS (Wanachama) -->
+                {% if session.get('user_id') or get_current_user().is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.challenges') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        ⚔️ CHALLENGES
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.scoreboard_listing') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        📊 SCOREBOARD
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('views.teams_listing') }}" style="color: #fff; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;" onmouseover="this.style.color='#00ff41'; this.style.textShadow='0 0 5px #00ff41'" onmouseout="this.style.color='#fff'; this.style.textShadow='none'">
+                        👥 TEAMS
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" style="color: #00ff41; transition: 0.3s; font-family: 'Courier New', monospace; font-weight: bold;">
+                        👤 {{ get_current_user().name | default("Account") }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" style="background: #0d0208; border: 1px solid #00ff41;">
+                        <a class="dropdown-item" href="{{ url_for('views.profile') }}" style="color: #fff; background: transparent;" onmouseover="this.style.color='#00ff41'; this.style.background='rgba(0,255,65,0.1)'" onmouseout="this.style.color='#fff'; this.style.background='transparent'">📋 Profile</a>
+                        <a class="dropdown-item" href="{{ url_for('views.settings') }}" style="color: #fff; background: transparent;" onmouseover="this.style.color='#00ff41'; this.style.background='rgba(0,255,65,0.1)'" onmouseout="this.style.color='#fff'; this.style.background='transparent'">⚙️ Settings</a>
+                        <div class="dropdown-divider" style="border-color: #00ff41;"></div>
+                        <a class="dropdown-item" href="{{ url_for('auth.logout') }}" style="color: #ff003c; background: transparent;" onmouseover="this.style.color='#fff'; this.style.background='rgba(255,0,60,0.2)'" onmouseout="this.style.color='#ff003c'; this.style.background='transparent'">🚪 Logout</a>
+                    </div>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Add some spacing to prevent content from hiding under fixed navbar -->
+<style>
+    body {
+        padding-top: 80px;
+    }
+    
+    .navbar-brand {
+        animation: neonPulse 2s infinite;
+    }
+    
+    @keyframes neonPulse {
+        0%, 100% { text-shadow: 0 0 10px #00ff41, 0 0 20px #00ff41; }
+        50% { text-shadow: 0 0 5px #00ff41, 0 0 10px #00ff41; }
+    }
+    
+    .nav-link {
+        position: relative;
+        transition: all 0.3s ease;
+    }
+    
+    .nav-link:hover {
+        transform: translateY(-2px);
+    }
+    
+    /* Active page indicator */
+    .nav-link.active {
+        color: #00ff41 !important;
+        text-shadow: 0 0 5px #00ff41;
+    }
+    
+    /* Dropdown menu styling */
+    .dropdown-menu {
+        box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+    }
+    
+    .dropdown-item {
+        transition: all 0.3s ease;
+    }
+    
+    .dropdown-item:hover {
+        transform: translateX(5px);
+    }
+</style>

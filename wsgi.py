@@ -8,7 +8,7 @@ from CTFd.utils.crypto import hash_password
 from sqlalchemy.exc import SQLAlchemyError
 
 # =========================================================================
-# 🔒 TABAKA LA USALAMA: BRUTE FORCE & ANTI-INTRUDER PROTECTION (OWASP TOP 10)
+# 🔒 TABAKA LA USALAMA: BRUTE FORCE & ANTI-INTRUDER PROTECTION
 # =========================================================================
 try:
     from flask_limiter import Limiter
@@ -35,17 +35,14 @@ app = create_app()
 # 🔒 RATE LIMITING CONFIGURATION - Anti Brute Force
 # =========================================================================
 if HAS_LIMITER:
-    # Function to get real client IP behind Render proxy
     def get_real_ip():
         """Get real client IP address even behind reverse proxy (Render.com)"""
-        # Check for Cloudflare/Render proxy headers
         if request.headers.get('X-Forwarded-For'):
             return request.headers.get('X-Forwarded-For').split(',')[0].strip()
         if request.headers.get('X-Real-IP'):
             return request.headers.get('X-Real-IP')
         return request.remote_addr
     
-    # Initialize limiter
     limiter = Limiter(
         key_func=get_real_ip,
         app=app,
@@ -54,7 +51,6 @@ if HAS_LIMITER:
         strategy="fixed-window"
     )
     
-    # Apply rate limit to login endpoint
     @app.before_request
     def apply_rate_limits():
         if request.endpoint == 'auth.login' and request.method == 'POST':
@@ -63,36 +59,26 @@ if HAS_LIMITER:
             except Exception:
                 pass
     
-    # Custom error handler for rate limit exceeded
     @app.errorhandler(429)
     def rate_limit_handler(e):
         logger.warning(f"[!] Rate limit exceeded for IP: {get_real_ip()}")
         return jsonify({
             'error': 'Too many requests. Please try again later.',
-            'message': 'Rate limit exceeded. Maximum 5 attempts per minute.'
+            'message': 'Maximum 5 attempts per minute.'
         }), 429
     
-    logger.info("[✓] Anti-Brute Force Layer (Flask-Limiter) activated successfully.")
-    logger.info("[✓] Login rate limit: 5 attempts per minute per IP address")
-else:
-    logger.warning("[!] Flask-Limiter is NOT active. Add 'Flask-Limiter==3.5.0' to requirements.txt")
+    logger.info("[✓] Anti-Brute Force Layer activated. Limit: 5 attempts/minute")
 
 # =========================================================================
 # 👑 ADMIN SETUP FUNCTION
 # =========================================================================
 def secure_admin_setup():
-    """
-    Usanidi salama wa akaunti ya ADMIN kwa CTFd platform.
-    Inafanya kazi kwa usalama kwenye Render.com na hosting nyingine.
-    """
     with app.app_context():
         try:
-            # Get environment variables
             email = os.environ.get("ADMIN_EMAIL")
             username = os.environ.get("ADMIN_USERNAME")
             password = os.environ.get("ADMIN_PASS")
             
-            # Validate required variables
             missing_vars = []
             if not email:
                 missing_vars.append("ADMIN_EMAIL")
@@ -102,30 +88,21 @@ def secure_admin_setup():
                 missing_vars.append("ADMIN_PASS")
             
             if missing_vars:
-                logger.error(f"[-] Missing required environment variables: {', '.join(missing_vars)}")
-                logger.error("[-] Admin setup aborted for security reasons.")
+                logger.error(f"[-] Missing: {', '.join(missing_vars)}")
                 return False
             
-            # Validate password strength
-            if len(password) < 8:
-                logger.warning("[!] Password is weak (less than 8 characters). Consider using a stronger password.")
-            
-            # Check if admin already exists
             existing_admin = Users.query.filter(
                 (Users.email == email) | (Users.type == "admin")
             ).first()
             
             if existing_admin:
-                # Update existing admin
                 existing_admin.type = "admin"
                 existing_admin.name = username
                 existing_admin.email = email
                 existing_admin.password = hash_password(password)
                 db.session.commit()
-                logger.info(f"[✓] Admin account UPDATED securely: {username} ({email})")
-                return True
+                logger.info(f"[✓] Admin UPDATED: {username}")
             else:
-                # Create new admin
                 new_admin = Users(
                     name=username,
                     email=email,
@@ -136,43 +113,45 @@ def secure_admin_setup():
                 )
                 db.session.add(new_admin)
                 db.session.commit()
-                logger.info(f"[✓] New admin account CREATED securely: {username} ({email})")
-                return True
+                logger.info(f"[✓] Admin CREATED: {username}")
+            return True
                 
-        except SQLAlchemyError as e:
-            logger.error(f"[-] Database error during admin setup: {str(e)}")
-            db.session.rollback()
-            return False
         except Exception as e:
-            logger.error(f"[-] Unexpected error during admin setup: {str(e)}")
+            logger.error(f"[-] Admin setup error: {str(e)}")
+            db.session.rollback()
             return False
 
 def list_admins():
-    """List all admin users (for debugging)"""
     with app.app_context():
         admins = Users.query.filter_by(type="admin").all()
         if admins:
-            logger.info("[*] Current admin accounts:")
+            logger.info("[*] Current admins:")
             for admin in admins:
                 logger.info(f"    - {admin.name} ({admin.email})")
         return admins
 
 # =========================================================================
-# 🚀 RUN AUTOMATIC ADMIN SETUP ON SERVER STARTUP (Lazima Gunicorn Iifanye!)
+# 🚀 RUN ON STARTUP
 # =========================================================================
 try:
     logger.info("=" * 50)
-    logger.info("[*] Initializing Automatic Secure Admin Setup...")
+    logger.info("[*] Initializing Secure Admin Setup...")
     logger.info("=" * 50)
     
-    # Hii inakimbia mara moja server inapowaka - NO __main__ block!
     success = secure_admin_setup()
     
     if success:
-        logger.info("[✓] Admin setup completed successfully at startup runtime!")
+        logger.info("[✓] Admin setup completed!")
         list_admins()
     else:
-        logger.error("[✗] Startup admin setup failed! Check environment variables.")
+        logger.error("[✗] Admin setup failed! Check environment variables.")
+    
+    # Debug: Check environment variables
+    logger.info("[*] Environment check:")
+    logger.info(f"    ADMIN_EMAIL: {'✓' if os.environ.get('ADMIN_EMAIL') else '✗'}")
+    logger.info(f"    ADMIN_USERNAME: {'✓' if os.environ.get('ADMIN_USERNAME') else '✗'}")
+    logger.info(f"    ADMIN_PASS: {'✓' if os.environ.get('ADMIN_PASS') else '✗'}")
     logger.info("=" * 50)
-except Exception as startup_error:
-    logger.error(f"[-] Unexpected error during startup initialization: {str(startup_error)}")
+    
+except Exception as e:
+    logger.error(f"[-] Startup error: {str(e)}")
